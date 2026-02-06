@@ -308,12 +308,44 @@ const getGroupBalances = async (req, res) => {
         const owed = balanceArray.filter(b => b.balance > 0);
         const settled = balanceArray.filter(b => b.balance === 0);
 
+        // Calculate settlements (Who owes whom)
+        const settlements = [];
+        const debtors = owes.map(d => ({ ...d, amount: Math.abs(d.balance) }));
+        const creditors = owed.map(c => ({ ...c, amount: c.balance }));
+
+        let i = 0; // debtor index
+        let j = 0; // creditor index
+
+        while (i < debtors.length && j < creditors.length) {
+            const debtor = debtors[i];
+            const creditor = creditors[j];
+
+            const amount = Math.min(debtor.amount, creditor.amount);
+
+            // Avoid zero transactions due to floating point precision
+            if (amount > 0.01) {
+                settlements.push({
+                    from: debtor.user,
+                    to: creditor.user,
+                    amount: Math.round(amount * 100) / 100
+                });
+            }
+
+            debtor.amount -= amount;
+            creditor.amount -= amount;
+
+            // Move to next if settled (checking for near-zero to handle float issues)
+            if (debtor.amount < 0.01) i++;
+            if (creditor.amount < 0.01) j++;
+        }
+
         res.status(200).json({
             success: true,
             balances: {
-                owes,      // People who owe money
-                owed,      // People who are owed money
-                settled    // People with no balance
+                owes,      // People who owe money (net)
+                owed,      // People who are owed money (net)
+                settled,   // People with no balance
+                settlements // Pair-wise payment plan
             }
         });
     } catch (error) {

@@ -17,7 +17,7 @@ const GroupDetails = () => {
 
     const [group, setGroup] = useState(null);
     const [expenses, setExpenses] = useState([]);
-    const [balances, setBalances] = useState({ owes: [], owed: [], settled: [] });
+    const [balances, setBalances] = useState({ owes: [], owed: [], settled: [], settlements: [] });
     const [loading, setLoading] = useState(true);
     const [showAddExpense, setShowAddExpense] = useState(false);
     const [showAddMember, setShowAddMember] = useState(false);
@@ -220,74 +220,95 @@ const GroupDetails = () => {
                     </div>
 
                     <div className="bg-gradient-to-br from-indigo-500/10 to-purple-500/10 dark:from-indigo-500/20 dark:to-purple-500/20 p-4 rounded-2xl border border-indigo-500/20">
-                        <div className="text-indigo-600 dark:text-indigo-300 text-sm mb-1">Your Net Balance</div>
                         {(() => {
                             // Find user's balance in the arrays
                             const userOwes = balances.owes.find(b => b.user._id === user._id);
                             const userOwed = balances.owed.find(b => b.user._id === user._id);
 
                             if (userOwed) {
-                                return <div className="text-2xl font-bold text-emerald-500 dark:text-emerald-400">+ Rs. {userOwed.balance}</div>;
+                                return (
+                                    <>
+                                        <div className="text-emerald-600 dark:text-emerald-400 text-sm mb-1 font-bold uppercase tracking-wider">Receivable</div>
+                                        <div className="text-2xl font-bold text-emerald-500 dark:text-emerald-400">+ Rs. {userOwed.balance}</div>
+                                    </>
+                                );
                             } else if (userOwes) {
-                                return <div className="text-2xl font-bold text-rose-500 dark:text-rose-400"> Rs. {userOwes.balance}</div>;
+                                return (
+                                    <>
+                                        <div className="text-rose-600 dark:text-rose-400 text-sm mb-1 font-bold uppercase tracking-wider">Payable</div>
+                                        <div className="text-2xl font-bold text-rose-500 dark:text-rose-400">Rs. {userOwes.balance}</div>
+                                    </>
+                                );
                             } else {
-                                return <div className="text-2xl font-bold text-slate-400 dark:text-slate-300">Settled</div>;
+                                return (
+                                    <>
+                                        <div className="text-slate-500 dark:text-slate-400 text-sm mb-1">Net Balance</div>
+                                        <div className="text-2xl font-bold text-slate-400 dark:text-slate-300">Settled</div>
+                                    </>
+                                );
                             }
                         })()}
                     </div>
                 </div>
 
-                {/* Balances Section */}
+                {/* Balance and Settlement Plan */}
                 <div className="mb-8">
                     <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
                         <PieChart size={20} className="text-indigo-400" />
-                        Balances
+                        Balance and Settlement Plan
                     </h2>
 
-                    <div className="grid md:grid-cols-2 gap-4">
-                        {/* Who Owes */}
-                        <div className="bg-slate-100 dark:bg-slate-800/30 rounded-2xl p-4 border border-slate-200 dark:border-white/5">
-                            <h3 className="text-sm font-medium text-rose-500 dark:text-rose-400 mb-3 uppercase tracking-wider">Owes Money</h3>
-                            {balances.owes.length === 0 ? (
-                                <p className="text-slate-500 text-sm italic">No one owes anything.</p>
-                            ) : (
-                                <div className="space-y-3">
-                                    {balances.owes.map((item, idx) => (
-                                        <div key={idx} className="flex justify-between items-center">
-                                            <div className="flex items-center gap-2">
-                                                <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-600 dark:text-slate-300">
-                                                    {item.user.name.charAt(0).toUpperCase()}
-                                                </div>
-                                                <span className="text-slate-900 dark:text-white">{item.user.name}</span>
-                                            </div>
-                                            <span className="font-bold text-rose-500 dark:text-rose-400">Rs. {item.balance}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
+                    <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-white/5 shadow-sm">
+                        {(!balances.settlements || balances.settlements.length === 0) ? (
+                            <div className="text-center py-6 text-slate-500 flex flex-col items-center gap-2">
+                                <TrendingUp size={48} className="text-emerald-200 dark:text-emerald-900/30 mb-2" />
+                                <p className="font-medium text-slate-600 dark:text-slate-400">All balances are settled!</p>
+                                <p className="text-sm">No pending payments in this group.</p>
+                            </div>
+                        ) : (
+                            <div className="space-y-4">
+                                {balances.settlements.map((settlement, idx) => (
+                                    <div key={idx} className="flex flex-col sm:flex-row items-center justify-between p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-100 dark:border-white/5 gap-4">
 
-                        {/* Who is Owed */}
-                        <div className="bg-slate-100 dark:bg-slate-800/30 rounded-2xl p-4 border border-slate-200 dark:border-white/5">
-                            <h3 className="text-sm font-medium text-emerald-600 dark:text-emerald-400 mb-3 uppercase tracking-wider">Owed Money</h3>
-                            {balances.owed.length === 0 ? (
-                                <p className="text-slate-500 text-sm italic">No one is owed anything.</p>
-                            ) : (
-                                <div className="space-y-3">
-                                    {balances.owed.map((item, idx) => (
-                                        <div key={idx} className="flex justify-between items-center">
-                                            <div className="flex items-center gap-2">
-                                                <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-600 dark:text-slate-300">
-                                                    {item.user.name.charAt(0).toUpperCase()}
+                                        {/* Visual Flow: Payer -> Arrow -> Receiver */}
+                                        <div className="flex items-center gap-2 sm:gap-4 flex-1 w-full sm:w-auto justify-center sm:justify-start">
+                                            {/* Payer */}
+                                            <div className="flex flex-col items-center gap-1 min-w-[60px]">
+                                                <div className="w-10 h-10 rounded-full bg-rose-100 dark:bg-rose-900/30 border-2 border-slate-50 dark:border-slate-800 flex items-center justify-center text-xs font-bold text-rose-600 dark:text-rose-400 shadow-sm relative z-10">
+                                                    {settlement.from.name.charAt(0).toUpperCase()}
                                                 </div>
-                                                <span className="text-slate-900 dark:text-white">{item.user.name}</span>
+                                                <span className="text-xs font-medium text-slate-600 dark:text-slate-300 max-w-[80px] truncate text-center">
+                                                    {settlement.from.name}
+                                                </span>
                                             </div>
-                                            <span className="font-bold text-emerald-500 dark:text-emerald-400">+ Rs. {item.balance}</span>
+
+                                            {/* Arrow visual */}
+                                            <div className="flex-1 flex flex-col items-center px-2 min-w-[80px]">
+                                                <span className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold mb-1">Pays</span>
+                                                <div className="h-0.5 w-full bg-slate-200 dark:bg-slate-700 relative">
+                                                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 border-t-2 border-r-2 border-slate-300 dark:border-slate-600 rotate-45 transform"></div>
+                                                </div>
+                                            </div>
+
+                                            {/* Receiver */}
+                                            <div className="flex flex-col items-center gap-1 min-w-[60px]">
+                                                <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/30 border-2 border-slate-50 dark:border-slate-800 flex items-center justify-center text-xs font-bold text-emerald-600 dark:text-emerald-400 shadow-sm relative z-10">
+                                                    {settlement.to.name.charAt(0).toUpperCase()}
+                                                </div>
+                                                <span className="text-xs font-medium text-slate-600 dark:text-slate-300 max-w-[80px] truncate text-center">
+                                                    {settlement.to.name}
+                                                </span>
+                                            </div>
                                         </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
+
+                                        {/* Amount */}
+                                        <div className="font-bold text-lg text-slate-900 dark:text-white bg-white dark:bg-slate-800 px-4 py-2 rounded-lg border border-slate-100 dark:border-white/5 shadow-sm min-w-[120px] text-center">
+                                            Rs. {settlement.amount}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
 
