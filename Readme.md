@@ -112,10 +112,3 @@ Frontend runs on `http://localhost:5173`
 ### Users
 - `GET /api/users/search?query=` - Search users
 
-## License
-
-MIT
-
-## Author
-
-Your Name
