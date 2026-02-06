@@ -115,7 +115,7 @@ const AddExpenseModal = ({ isOpen, onClose, groupId, members = [], onExpenseAdde
         <div className="space-y-6 animate-fade-in">
             {/* Amount Input */}
             <div className="relative">
-                <label className="text-sm font-medium text-slate-400 mb-1 block">Amount</label>
+                <label className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1 block">Amount</label>
                 <div className="flex items-center border-b-2 border-indigo-500/50 focus-within:border-indigo-400 transition-colors pb-1">
                     <span className="text-2xl font-bold text-slate-400 mr-2">Rs.</span>
                     <input
@@ -123,7 +123,7 @@ const AddExpenseModal = ({ isOpen, onClose, groupId, members = [], onExpenseAdde
                         value={amount}
                         onChange={(e) => setAmount(e.target.value)}
                         placeholder="0.00"
-                        className="w-full bg-transparent text-4xl font-bold text-white placeholder-slate-600 focus:outline-none"
+                        className="w-full bg-transparent text-4xl font-bold text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none"
                         autoFocus
                         step="0.01"
                         min="0"
@@ -133,34 +133,34 @@ const AddExpenseModal = ({ isOpen, onClose, groupId, members = [], onExpenseAdde
 
             {/* Title - CHANGED */}
             <div>
-                <label className="text-sm font-medium text-slate-400 mb-2 block">Title *</label>
+                <label className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-2 block">Title *</label>
                 <div className="relative">
-                    <Receipt className="absolute top-3.5 left-3.5 text-slate-500" size={18} />
+                    <Receipt className="absolute top-3.5 left-3.5 text-slate-400 dark:text-slate-500" size={18} />
                     <input
                         type="text"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         placeholder="e.g. Dinner at restaurant"
-                        className="w-full bg-slate-800 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all"
+                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-white/10 rounded-xl pl-10 pr-4 py-3 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all"
                     />
                 </div>
             </div>
 
             {/* Description (Optional) - ADDED */}
             <div>
-                <label className="text-sm font-medium text-slate-400 mb-2 block">Description (Optional)</label>
+                <label className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-2 block">Description (Optional)</label>
                 <textarea
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="Additional details..."
                     rows={2}
-                    className="w-full bg-slate-800 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all resize-none"
+                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all resize-none"
                 />
             </div>
 
             {/* Category Grid */}
             <div>
-                <label className="text-sm font-medium text-slate-400 mb-3 block">Category *</label>
+                <label className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-3 block">Category *</label>
                 <div className="grid grid-cols-2 gap-3">
                     {CATEGORIES.map((cat) => (
                         <button
@@ -168,14 +168,14 @@ const AddExpenseModal = ({ isOpen, onClose, groupId, members = [], onExpenseAdde
                             type="button"
                             onClick={() => setCategory(cat.id)}
                             className={`flex items-center gap-3 p-3 rounded-xl border transition-all ${category === cat.id
-                                ? `bg-slate-800 border-indigo-500 ring-1 ring-indigo-500/50`
-                                : `bg-white/5 border-transparent hover:bg-white/10`
+                                ? `bg-slate-50 dark:bg-slate-800 border-indigo-500 ring-1 ring-indigo-500/50`
+                                : `bg-slate-100 dark:bg-white/5 border-transparent hover:bg-slate-200 dark:hover:bg-white/10`
                                 }`}
                         >
                             <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${cat.bg} ${cat.color}`}>
                                 <cat.icon size={16} />
                             </div>
-                            <span className={`text-sm font-medium ${category === cat.id ? 'text-white' : 'text-slate-400'}`}>
+                            <span className={`text-sm font-medium ${category === cat.id ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400'}`}>
                                 {cat.label}
                             </span>
                         </button>
@@ -187,22 +187,22 @@ const AddExpenseModal = ({ isOpen, onClose, groupId, members = [], onExpenseAdde
 
     const renderStep2 = () => (
         <div className="space-y-6 animate-fade-in">
-            <div className="bg-slate-800/50 p-4 rounded-xl border border-white/5">
+            <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-white/5">
                 <div className="flex justify-between items-center mb-2">
-                    <span className="text-slate-400 text-sm">Title</span>
-                    <span className="text-sm font-medium text-white">{title}</span>
+                    <span className="text-slate-500 dark:text-slate-400 text-sm">Title</span>
+                    <span className="text-sm font-medium text-slate-900 dark:text-white">{title}</span>
                 </div>
                 <div className="flex justify-between items-center mb-2">
-                    <span className="text-slate-400 text-sm">Total Amount</span>
-                    <span className="text-xl font-bold text-white">Rs. {parseFloat(amount || 0).toFixed(2)}</span>
+                    <span className="text-slate-500 dark:text-slate-400 text-sm">Total Amount</span>
+                    <span className="text-xl font-bold text-slate-900 dark:text-white">Rs. {parseFloat(amount || 0).toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                    <span className="text-slate-400 text-sm">Category</span>
-                    <span className="text-sm font-medium text-indigo-400 capitalize">{category}</span>
+                    <span className="text-slate-500 dark:text-slate-400 text-sm">Category</span>
+                    <span className="text-sm font-medium text-indigo-500 dark:text-indigo-400 capitalize">{category}</span>
                 </div>
                 {selectedMembers.length > 0 && (
-                    <div className="flex justify-between items-center mt-2 pt-2 border-t border-white/5">
-                        <span className="text-slate-400 text-sm">Per Person</span>
+                    <div className="flex justify-between items-center mt-2 pt-2 border-t border-slate-200 dark:border-white/5">
+                        <span className="text-slate-500 dark:text-slate-400 text-sm">Per Person</span>
                         <span className="text-sm font-medium text-emerald-400">
                             Rs. {(parseFloat(amount || 0) / selectedMembers.length).toFixed(2)}
                         </span>
@@ -211,7 +211,7 @@ const AddExpenseModal = ({ isOpen, onClose, groupId, members = [], onExpenseAdde
             </div>
 
             <div>
-                <label className="text-sm font-medium text-slate-400 mb-3 block">Split Amongst</label>
+                <label className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-3 block">Split Amongst</label>
                 <div className="space-y-2">
                     <button
                         type="button"
@@ -228,16 +228,16 @@ const AddExpenseModal = ({ isOpen, onClose, groupId, members = [], onExpenseAdde
                                 key={member._id}
                                 onClick={() => toggleMemberSelection(member._id)}
                                 className={`flex items-center justify-between p-3 rounded-xl border cursor-pointer transition-all ${isSelected
-                                    ? 'bg-slate-800 border-indigo-500/50'
-                                    : 'bg-white/5 border-transparent hover:bg-white/10'
+                                    ? 'bg-slate-50 dark:bg-slate-800 border-indigo-500/50'
+                                    : 'bg-slate-100 dark:bg-white/5 border-transparent hover:bg-slate-200 dark:hover:bg-white/10'
                                     }`}
                             >
                                 <div className="flex items-center gap-3">
-                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${isSelected ? 'bg-indigo-500 text-white' : 'bg-slate-700 text-slate-400'
+                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${isSelected ? 'bg-indigo-500 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400'
                                         }`}>
                                         {member.name.charAt(0).toUpperCase()}
                                     </div>
-                                    <span className={isSelected ? 'text-white' : 'text-slate-400'}>
+                                    <span className={isSelected ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400'}>
                                         {member.name}
                                     </span>
                                 </div>
@@ -250,13 +250,13 @@ const AddExpenseModal = ({ isOpen, onClose, groupId, members = [], onExpenseAdde
 
             {/* Payer Selection */}
             <div>
-                <label className="text-sm font-medium text-slate-400 mb-3 block">Paid By</label>
+                <label className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-3 block">Paid By</label>
                 <div className="relative">
-                    <CreditCard className="absolute top-3.5 left-3.5 text-slate-500" size={18} />
+                    <CreditCard className="absolute top-3.5 left-3.5 text-slate-400 dark:text-slate-500" size={18} />
                     <select
                         value={paidBy}
                         onChange={(e) => setPaidBy(e.target.value)}
-                        className="w-full bg-slate-800 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-white/10 rounded-xl pl-10 pr-4 py-3 text-slate-900 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
                     >
                         {members.map(m => (
                             <option key={m._id} value={m._id}>
@@ -289,12 +289,12 @@ const AddExpenseModal = ({ isOpen, onClose, groupId, members = [], onExpenseAdde
                 </div>
 
                 {/* Footer Controls */}
-                <div className="mt-6 pt-6 border-t border-white/5 flex gap-3">
+                <div className="mt-6 pt-6 border-t border-slate-200 dark:border-white/5 flex gap-3">
                     {step > 1 && (
                         <button
                             type="button"
                             onClick={handleBack}
-                            className="px-4 py-3 rounded-xl border border-white/10 text-slate-300 hover:bg-white/5 transition-colors flex items-center gap-2"
+                            className="px-4 py-3 rounded-xl border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors flex items-center gap-2"
                         >
                             <ChevronLeft size={18} /> Back
                         </button>

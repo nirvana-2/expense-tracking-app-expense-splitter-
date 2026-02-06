@@ -13,7 +13,7 @@ const ProtectedRoute = ({ children }) => {
     const { user, loading } = useContext(AuthContext);
 
     if (loading) {
-        return <div className="min-h-screen bg-slate-900 flex items-center justify-center text-white animate-pulse">Loading...</div>;
+        return <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center text-slate-900 dark:text-white animate-pulse">Loading...</div>;
     }
 
     if (!user) {
