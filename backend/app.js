@@ -10,7 +10,7 @@ const app = express();
 
 //cors congifuration
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: ['http://localhost:5173', /\.vercel\.app$/],
     methods: ['GET', 'PUT', 'POST', 'DELETE'],
     credentials: true
 }))
