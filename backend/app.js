@@ -10,7 +10,11 @@ const app = express();
 
 //cors congifuration
 app.use(cors({
-    origin: ['http://localhost:5173', /\.vercel\.app$/],
+    origin: [
+        'http://localhost:5173',
+        'https://expense-tracking-app-expense-splitt.vercel.app',
+        /\.vercel\.app$/
+    ],
     methods: ['GET', 'PUT', 'POST', 'DELETE'],
     credentials: true
 }))
