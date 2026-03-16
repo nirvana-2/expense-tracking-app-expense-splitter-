@@ -2,6 +2,20 @@
 
 A full-stack MERN application for splitting expenses among friends and groups.
 
+## 🌐 Live Demo
+
+👉 **[https://expense-tracking-app-expense-splitt.vercel.app](https://expense-tracking-app-expense-splitt.vercel.app)**
+
+| Name | Email | Password |
+|------|-------|----------|
+| Saman Shakya | saman@example.com | password123 |
+| Priya Sharma | priya@example.com | password123 |
+| Rahul Thapa | rahul@example.com | password123 |
+| Anita Rai | anita@example.com | password123 |
+| Bikash Karki | bikash@example.com | password123 |
+
+---
+
 ## Features
 
 - 👥 User authentication (register/login)
@@ -10,6 +24,8 @@ A full-stack MERN application for splitting expenses among friends and groups.
 - 📊 Automatic expense splitting
 - 💳 Balance calculation (who owes whom)
 - 🔍 Search and add members
+
+---
 
 ## Tech Stack
 
@@ -26,6 +42,13 @@ A full-stack MERN application for splitting expenses among friends and groups.
 - MongoDB + Mongoose
 - JWT Authentication
 - bcryptjs for password hashing
+
+**Deployment:**
+- Vercel (Frontend)
+- Render (Backend)
+- MongoDB Atlas (Database)
+
+---
 
 ## Installation
 
@@ -54,7 +77,7 @@ JWT_SECRET=your_super_secret_jwt_key_here
 
 4. Start the server:
 ```bash
-npm start
+node server.js
 ```
 
 Backend runs on `http://localhost:3000`
@@ -71,12 +94,19 @@ cd frontend
 npm install
 ```
 
-3. Start the development server:
+3. Create `.env` file:
+```env
+VITE_API_URL=http://localhost:3000
+```
+
+4. Start the development server:
 ```bash
 npm run dev
 ```
 
 Frontend runs on `http://localhost:5173`
+
+---
 
 ## Usage
 
@@ -85,6 +115,8 @@ Frontend runs on `http://localhost:5173`
 3. Add members to your group
 4. Start adding expenses
 5. View balances to see who owes whom
+
+---
 
 ## API Endpoints
 
@@ -112,3 +144,7 @@ Frontend runs on `http://localhost:5173`
 ### Users
 - `GET /api/users/search?query=` - Search users
 
+---
+//
+
+*Developed by Saman Shakya*

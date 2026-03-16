@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import api from '../services/api';
 import {
-    ArrowLeft, Settings, Plus, Users, UserPlus, Trash2, ChevronDown, ChevronUp,
+    ArrowLeft, Plus, Users, UserPlus, Trash2, ChevronDown, ChevronUp,
     Calendar, DollarSign, PieChart, TrendingUp
 } from 'lucide-react';
 import AddExpenseModal from '../components/AddExpenseModal';
@@ -123,12 +123,7 @@ const GroupDetails = () => {
                             <span className="hidden sm:inline">Add Expense</span>
                         </button>
 
-                        <button
-                            className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg transition-colors"
-                            title="Group Settings"
-                        >
-                            <Settings size={20} />
-                        </button>
+
                     </div>
                 </div>
             </header>
